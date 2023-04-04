@@ -36,3 +36,4 @@ jobs:
           sudo chroot alpine-chroot/ /bin/ash -c "/usr/bin/wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub"
           sudo chroot alpine-chroot/ /bin/ash -c "/sbin/apk update"
           sudo chroot alpine-chroot/ /bin/ash -c "/sbin/rc-update add devfs sysinit && /sbin/rc-update add dmesg sysinit && /sbin/rc-update add mdev sysinit && /sbin/rc-update add hwclock boot && /sbin/rc-update add modules boot && /sbin/rc-update add sysctl boot && /sbin/rc-update add hostname boot && /sbin/rc-update add bootmisc boot && /sbin/rc-update add syslog boot && /sbin/rc-update add mount-ro shutdown && /sbin/rc-update add killprocs shutdown && /sbin/rc-update add savecache shutdown"
+          sudo chroot alpine-chroot/ /bin/ash -c "/sbin/apk add alphybris-base-api28
