@@ -1,0 +1,26 @@
+name: API 28 image build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get apk tools
+        run: |
+          curl -LO http://dl-cdn.alpinelinux.org/alpine/latest-stable/main/aarch64/apk-tools-static-2.12.10-r1.apk
+          tar -xzf apk-tools-static-*.apk
+
+      - name: Setup minimal Alpine chroot
+        run: |
+          mkdir alpine-chroot
+          ./sbin/apk.static -X http://dl-cdn.alpinelinux.org/alpine/v3.17/main -U --allow-untrusted -p alpine-chroot/ --initdb add alpine-base
