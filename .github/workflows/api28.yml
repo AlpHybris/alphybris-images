@@ -33,6 +33,6 @@ jobs:
           sudo mount -t proc none alpine-chroot/proc
           sudo mount -o bind /sys alpine-chroot/sys
           echo -e 'nameserver 8.8.8.8\nnameserver 2620:0:ccc::2' | sudo tee alpine-chroot/etc/resolv.conf
-          sudo chroot alpine-chroot/ /bin/ash wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
-          sudo chroot alpine-chroot/ /bin/ash apk update
-          sudo chroot alpine-chroot/ /bin/ash rc-update add devfs sysinit && rc-update add dmesg sysinit && rc-update add mdev sysinit && rc-update add hwclock boot && rc-update add modules boot && rc-update add sysctl boot && rc-update add hostname boot && rc-update add bootmisc boot && rc-update add syslog boot && rc-update add mount-ro shutdown && rc-update add killprocs shutdown && rc-update add savecache shutdown
+          sudo chroot alpine-chroot/ /bin/ash /usr/bin/wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub
+          sudo chroot alpine-chroot/ /bin/ash /sbin/apk update
+          sudo chroot alpine-chroot/ /bin/ash /sbin/rc-update add devfs sysinit && /sbin/rc-update add dmesg sysinit && /sbin/rc-update add mdev sysinit && /sbin/rc-update add hwclock boot && /sbin/rc-update add modules boot && /sbin/rc-update add sysctl boot && /sbin/rc-update add hostname boot && /sbin/rc-update add bootmisc boot && /sbin/rc-update add syslog boot && /sbin/rc-update add mount-ro shutdown && /sbin/rc-update add killprocs shutdown && /sbin/rc-update add savecache shutdown
