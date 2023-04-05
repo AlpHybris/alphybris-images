@@ -1,4 +1,4 @@
-name: API 28 image build
+name: API 30 image build
 
 on:
   push:
@@ -42,7 +42,7 @@ jobs:
           sudo chroot alpine-chroot/ /bin/ash -c "/sbin/apk add sudo && echo '%wheel ALL=(ALL) ALL' | tee /etc/sudoers.d/wheel"
           sudo chroot alpine-chroot/ /bin/ash -c "/usr/sbin/adduser -D -u 32011 alphybris"
           sudo chroot alpine-chroot/ /bin/ash -c "/usr/sbin/adduser alphybris wheel"
-          sudo chroot alpine-chroot/ /bin/ash -c "/sbin/apk add alphybris-base-api28"
+          sudo chroot alpine-chroot/ /bin/ash -c "/sbin/apk add alphybris-base-api30"
 
       - name: Pack up rootfs
         run: |

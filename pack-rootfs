@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SIZE=$(du -s --block-size=GB alpine-chroot/ | awk '{print $1}' | sed -e 's/GB//g')
+REAL_SIZE=`echo "$(($SIZE+0.5))"`
+
+fallocate -l $REAL_SIZE rootfs.img
+mkfs.ext4 -F rootfs.img
+modprobe loop
+
+mkdir mountpoint/
+mount rootfs.img mountpoint/
+mv alpine-chroot/* mountpoint/
+
+umount mountpoint/
