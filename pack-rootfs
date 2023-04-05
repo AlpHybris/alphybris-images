@@ -5,7 +5,7 @@ umount -l alpine-chroot/dev
 umount -l alpine-chroot/proc
 
 SIZE=$(du -s --block-size=GB alpine-chroot/ | awk '{print $1}' | sed -e 's/GB//g')
-REAL_SIZE=`echo "$(($SIZE+0.5))"`
+REAL_SIZE=$(awk -v size="$SIZE" 'BEGIN { printf "%.1f", size + 0.5 }')
 
 fallocate -l $REAL_SIZE rootfs.img
 mkfs.ext4 -F rootfs.img
