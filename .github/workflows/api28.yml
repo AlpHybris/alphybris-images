@@ -33,7 +33,7 @@ jobs:
           sudo mount -t proc none alpine-chroot/proc
           sudo mount -o bind /sys alpine-chroot/sys
           echo -e 'nameserver 8.8.8.8\nnameserver 2620:0:ccc::2' | sudo tee alpine-chroot/etc/resolv.conf
-          
+
       - name: Install AlpHybris base
         run: |
           sudo chroot alpine-chroot/ /bin/ash -c "/usr/bin/wget -P /etc/apk/keys https://mirror.bardia.tech/alphybris/aarch64/fakeshell@bardia.tech-642c0d85.rsa.pub"

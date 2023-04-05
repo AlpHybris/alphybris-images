@@ -1,5 +1,9 @@
 #!/bin/bash
 
+umount -l alpine-chroot/sys
+umount -l alpine-chroot/dev
+umount -l alpine-chroot/proc
+
 SIZE=$(du -s --block-size=GB alpine-chroot/ | awk '{print $1}' | sed -e 's/GB//g')
 REAL_SIZE=`echo "$(($SIZE+0.5))"`
 
