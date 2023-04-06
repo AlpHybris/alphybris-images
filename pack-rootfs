@@ -1,4 +1,19 @@
 #!/bin/bash
+while [ "$1" != "" ]; do
+    case $1 in
+    -n | --image-name)
+          shift
+          IMAGE_NAME=$1
+          ;;
+     # Add more options as required
+    *)
+          exit 1
+          ;;
+    esac
+    shift
+done
+
+[ "$IMAGE_NAME" == "" ] && IMAGE_NAME=rootfs.img || true
 
 umount -l alpine-chroot/sys
 umount -l alpine-chroot/dev
@@ -7,12 +22,12 @@ umount -l alpine-chroot/proc
 SIZE=$(du -s --block-size=GB alpine-chroot/ | awk '{print $1}' | sed -e 's/GB//g')
 REAL_SIZE=$(awk -v size="$SIZE" 'BEGIN { printf "%.1f", size + 0.5 }')
 
-fallocate -l "$REAL_SIZE"G rootfs.img
-mkfs.ext4 -F rootfs.img
+fallocate -l "$REAL_SIZE"G 
+mkfs.ext4 -F $IMAGE_NAME
 modprobe loop
 
 mkdir mountpoint/
-mount rootfs.img mountpoint/
+mount $IMAGE_NAME mountpoint/
 mv alpine-chroot/* mountpoint/
 
 umount mountpoint/
