@@ -150,11 +150,12 @@ jobs:
     steps:
       - name: Get previous artifacts
         uses: actions/download-artifact@v3
-        
+        with:
+          path: ~/artifacts
       - name: Upload rootfs's to releases
         uses: xresloader/upload-to-github-release@v1
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "*.img"
+          file: "/home/runner/artifacts/*img"
           draft: false
