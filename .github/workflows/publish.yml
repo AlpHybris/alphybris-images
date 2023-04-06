@@ -1,0 +1,31 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - master
+  
+
+jobs:
+  imagebuild:
+    uses: alphybris/alphybris-images/.github/workflows/build.yml@master
+    secrets: inherit
+  publish:
+    runs-on: ubuntu-latest
+    needs: imagebuild
+    steps:
+      - name: Download rootfs
+        uses: actions/download-artifact@v2.1.1
+        with:
+          name: |
+            api28-rootfs
+            api29-rootfs
+            api30-rootfs
+        
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            alphybris-api28-rootfs.img
+            alphybris-api29-rootfs.img
+            alphybris-api30-rootfs.img
