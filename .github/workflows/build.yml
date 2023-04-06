@@ -131,7 +131,7 @@ jobs:
     
     steps:
       - name: Upload rootfs's to releases
-        uses: softprops@action-gh-release@v1
+        uses: softprops/action-gh-release@v1
         with:
           files: |
             alphybris-api28-rootfs.img
