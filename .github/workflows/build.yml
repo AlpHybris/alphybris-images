@@ -48,6 +48,12 @@ jobs:
         run: |
           sudo bash ./pack-rootfs --image-name alphybris-api28-rootfs.img
           
+      - name: Store rootfs as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: api28-rootfs
+          path: alphybris-api28-rootfs.img
+          
   api29:
     runs-on: ubuntu-latest
 
@@ -87,6 +93,12 @@ jobs:
         run: |
           sudo bash ./pack-rootfs --image-name alphybris-api29-rootfs.img
           
+      - name: Store rootfs as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: api29-rootfs
+          path: alphybris-api29-rootfs.img
+
   api30:
     runs-on: ubuntu-latest
 
@@ -125,11 +137,20 @@ jobs:
       - name: Pack up rootfs
         run: |
           sudo bash ./pack-rootfs --image-name alphybris-api30-rootfs.img
+          
+      - name: Store rootfs as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: api30-rootfs
+          path: alphybris-api30-rootfs.img
 
   publish:
     runs-on: ubuntu-latest
     needs: [api28, api29, api30]
     steps:
+      - name: Get previous artifacts
+        uses: actions/download-artifact@v3
+        
       - name: Upload rootfs's to releases
         uses: xresloader/upload-to-github-release@v1
         env:
