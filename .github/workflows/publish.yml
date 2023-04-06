@@ -8,7 +8,7 @@ on:
 
 jobs:
   imagebuild:
-    uses: alphybris/alphybris-images/.github/workflows/build.yml@master
+    uses: alphybris/alphybris-images/.github/workflows/build.yml@main
     secrets: inherit
   publish:
     runs-on: ubuntu-latest
