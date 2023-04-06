@@ -128,7 +128,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    
+    needs: [api28, api29, api30]
     steps:
       - name: Upload rootfs's to releases
         uses: softprops/action-gh-release@v1
