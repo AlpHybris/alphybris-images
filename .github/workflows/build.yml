@@ -161,9 +161,9 @@ jobs:
           mv ~/artifacts/api28-rootfs/alphybris-api28-rootfs.img ~/
           mv ~/artifacts/api29-rootfs/alphybris-api29-rootfs.img ~/
           mv ~/artifacts/api30-rootfs/alphybris-api30-rootfs.img ~/
-          zip -9 ~/alphybris-api28-rootfs.zip ~/alphybris-api28-rootfs.img
-          zip -9 ~/alphybris-api29-rootfs.zip ~/alphybris-api29-rootfs.img
-          zip -9 ~/alphybris-api30-rootfs.zip ~/alphybris-api30-rootfs.img
+          zip -j -9 ~/alphybris-api28-rootfs.zip ~/alphybris-api28-rootfs.img
+          zip -j -9 ~/alphybris-api29-rootfs.zip ~/alphybris-api29-rootfs.img
+          zip -j -9 ~/alphybris-api30-rootfs.zip ~/alphybris-api30-rootfs.img
       - name: Upload rootfs's to releases
         uses: xresloader/upload-to-github-release@v1
         env:
