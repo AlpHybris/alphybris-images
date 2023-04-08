@@ -152,10 +152,16 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: ~/artifacts
+          
+      - name: Compress the artifacts
+        run: |
+          zip -9 ~/alphybris-api28-rootfs.zip ~/artifacts/api28-rootfs/*.img
+          zip -9 ~/alphybris-api29-rootfs.zip ~/artifacts/api29-rootfs/*.img
+          zip -9 ~/alphybris-api30-rootfs.zip ~/artifacts/api30-rootfs/*.img
       - name: Upload rootfs's to releases
         uses: xresloader/upload-to-github-release@v1
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "/home/runner/artifacts/*/*img"
+          file: "/home/runner/*.zip"
           draft: false
