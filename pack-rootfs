@@ -29,5 +29,6 @@ modprobe loop
 mkdir mountpoint/
 mount $IMAGE_NAME mountpoint/
 mv alpine-chroot/* mountpoint/
+touch mountpoint/.writable_image
 
 umount mountpoint/
