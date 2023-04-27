@@ -1,4 +1,5 @@
 #!/bin/bash
+
 while [ "$1" != "" ]; do
     case $1 in
     -n | --image-name)
@@ -28,7 +29,7 @@ modprobe loop
 
 mkdir mountpoint/
 mount $IMAGE_NAME mountpoint/
-mv alpine-chroot/* mountpoint/
+rsync -aHAX --delete --numeric-ids --progress alpine-chroot/ mountpoint/
 touch mountpoint/.writable_image
 
 umount mountpoint/

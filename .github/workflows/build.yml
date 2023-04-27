@@ -23,6 +23,8 @@ jobs:
 
       - name: Setup minimal Alpine chroot
         run: |
+          sudo apt update
+          sudo apt install rsync -y
           mkdir alpine-chroot
           sudo ./sbin/apk.static -X http://dl-cdn.alpinelinux.org/alpine/v3.17/main -U --allow-untrusted -p alpine-chroot/ --initdb add alpine-base
           sudo mkdir -p alpine-chroot/etc/apk
