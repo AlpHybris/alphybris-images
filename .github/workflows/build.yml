@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Installing dependencies
-      - run: |
+      run: |
           sudo apt update
           sudo apt install rsync -y
 
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Installing dependencies
-      - run: |
+      run: |
           sudo apt update
           sudo apt install rsync -y
 
@@ -157,7 +157,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Installing dependencies
-      - run: |
+      run: |
           sudo apt update
           sudo apt install rsync -y
 
