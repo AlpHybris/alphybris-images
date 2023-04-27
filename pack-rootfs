@@ -1,35 +1,62 @@
 #!/bin/bash
 
-while [ "$1" != "" ]; do
-    case $1 in
-    -n | --image-name)
-          shift
-          IMAGE_NAME=$1
-          ;;
-     # Add more options as required
-    *)
-          exit 1
-          ;;
-    esac
-    shift
-done
+set -e
 
-[ "$IMAGE_NAME" == "" ] && IMAGE_NAME=rootfs.img || true
+function usage() {
+    cat <<EOF
+Usage: $0 [OPTIONS]
 
-umount -l alpine-chroot/sys
-umount -l alpine-chroot/dev
-umount -l alpine-chroot/proc
+Options:
+  -n, --image-name IMAGE_NAME    Name of the image file (default: rootfs.img)
+  -h, --help                     Show this help message and exit
+EOF
+}
 
-SIZE=$(du -s --block-size=GB alpine-chroot/ | awk '{print $1}' | sed -e 's/GB//g')
-REAL_SIZE=$(awk -v size="$SIZE" 'BEGIN { printf "%.1f", size + 0.5 }')
+function parse_arguments() {
+    while [ "$1" != "" ]; do
+        case $1 in
+            -n | --image-name)
+                shift
+                IMAGE_NAME=$1
+                ;;
+            -h | --help)
+                usage
+                exit 0
+                ;;
+            *)
+                usage
+                exit 1
+                ;;
+        esac
+        shift
+    done
+}
 
-fallocate -l "$REAL_SIZE"G $IMAGE_NAME
-mkfs.ext4 -F $IMAGE_NAME
-modprobe loop
+function main() {
+    parse_arguments "$@"
 
-mkdir mountpoint/
-mount $IMAGE_NAME mountpoint/
-rsync -aHAX --delete --numeric-ids --progress alpine-chroot/ mountpoint/
-touch mountpoint/.writable_image
+    IMAGE_NAME=${IMAGE_NAME:-rootfs.img}
 
-umount mountpoint/
+    CHROOT_DIR=alpine-chroot
+    MOUNTPOINT=mountpoint
+
+    umount -l "${CHROOT_DIR}/sys" || true
+    umount -l "${CHROOT_DIR}/dev" || true
+    umount -l "${CHROOT_DIR}/proc" || true
+
+    SIZE=$(du -s --block-size=1G "${CHROOT_DIR}/" | awk '{print $1}')
+    REAL_SIZE=$(awk -v size="$SIZE" 'BEGIN { printf "%.1f", size + 0.5 }')
+
+    fallocate -l "${REAL_SIZE}G" "${IMAGE_NAME}"
+    mkfs.ext4 -F "${IMAGE_NAME}"
+    modprobe loop
+
+    mkdir -p "${MOUNTPOINT}/"
+    mount "${IMAGE_NAME}" "${MOUNTPOINT}/"
+    rsync -aHAX --delete --numeric-ids --progress "${CHROOT_DIR}/" "${MOUNTPOINT}/"
+    touch "${MOUNTPOINT}/.writable_image"
+
+    umount "${MOUNTPOINT}/"
+}
+
+main "$@"
