@@ -29,10 +29,10 @@ jobs:
       - name: Setup minimal Alpine chroot
         run: |
           mkdir alpine-chroot
-          sudo ./sbin/apk.static -X http://dl-cdn.alpinelinux.org/alpine/edge/main -U --allow-untrusted -p alpine-chroot/ --initdb add alpine-base
+          sudo ./sbin/apk.static -X http://dl-cdn.alpinelinux.org/alpine/v3.17/main -U --allow-untrusted -p alpine-chroot/ --initdb add alpine-base
           sudo mkdir -p alpine-chroot/etc/apk
-          echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" | sudo tee -a alpine-chroot/etc/apk/repositories
-          echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" | sudo tee -a alpine-chroot/etc/apk/repositories
+          echo "http://dl-cdn.alpinelinux.org/alpine/v3.17/main" | sudo tee -a alpine-chroot/etc/apk/repositories
+          echo "http://dl-cdn.alpinelinux.org/alpine/v3.17/community" | sudo tee -a alpine-chroot/etc/apk/repositories
           echo "http://mirror.bardia.tech/alphybris" | sudo tee -a alpine-chroot/etc/apk/repositories
           sudo mount -o bind /dev alpine-chroot/dev
           sudo mount -t proc none alpine-chroot/proc
